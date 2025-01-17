@@ -10,7 +10,7 @@
         android:background="#f5f5f5"
         android:orientation="vertical">
 
-        <android.support.v7.widget.SwitchCompat
+        <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/control"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -29,6 +29,7 @@
                 android:background="@drawable/gradient_background">
 
                 <TextView
+                    android:id="@+id/tv_hello_world"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="20dp"
@@ -195,19 +196,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginEnd="32dp"
-            android:layout_marginLeft="32dp"
-            android:layout_marginRight="32dp"
             android:layout_marginStart="32dp"
+            android:layout_marginLeft="32dp"
             android:layout_marginTop="24dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginRight="32dp"
             android:background="#f00"
             android:gravity="center"
             android:lineSpacingExtra="2dp"
             android:padding="12dp"
             android:text="Font Test"
             android:textColor="#fff"
-            android:textSize="15dp"
-            />
+            android:textSize="15dp" />
 
         <LinearLayout
             android:layout_width="match_parent"

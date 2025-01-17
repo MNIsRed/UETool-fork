@@ -1,8 +1,9 @@
 package me.ele.uetool.base.item;
 
-import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.View;
+
+import androidx.annotation.Nullable;
 
 public class TextItem extends TitleItem {
 

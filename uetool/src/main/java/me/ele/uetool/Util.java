@@ -1,20 +1,25 @@
 package me.ele.uetool;
 
+import static android.view.View.NO_ID;
+
 import android.app.Activity;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.res.Resources;
-import android.graphics.*;
-import android.graphics.drawable.*;
+import android.graphics.Bitmap;
+import android.graphics.LinearGradient;
+import android.graphics.NinePatch;
+import android.graphics.Paint;
+import android.graphics.Shader;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ClipDrawable;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.NinePatchDrawable;
+import android.graphics.drawable.StateListDrawable;
 import android.os.Build;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.graphics.drawable.VectorDrawableCompat;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
-import android.support.v7.widget.RecyclerView;
 import android.text.SpannedString;
 import android.text.style.ImageSpan;
 import android.util.Pair;
@@ -26,17 +31,24 @@ import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-import me.ele.uetool.base.Application;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
+import me.ele.uetool.base.Application;
 import me.ele.uetool.base.ReflectionP;
 import me.ele.uetool.base.ReflectionP.Func;
-
-import static android.view.View.NO_ID;
 
 public class Util {
 
@@ -61,7 +73,8 @@ public class Util {
 
     public static String getViewClickListener(final View view) {
         return ReflectionP.breakAndroidP(new Func<String>() {
-            @Override public String call() {
+            @Override
+            public String call() {
                 try {
                     final Field mListenerInfoField = View.class.getDeclaredField("mListenerInfo");
                     mListenerInfoField.setAccessible(true);
@@ -221,7 +234,7 @@ public class Util {
             } else if (drawable instanceof VectorDrawableCompat) {
                 Field mVectorStateField = VectorDrawableCompat.class.getDeclaredField("mVectorState");
                 mVectorStateField.setAccessible(true);
-                Field mCachedBitmapField = Class.forName("android.support.graphics.drawable.VectorDrawableCompat$VectorDrawableCompatState").getDeclaredField("mCachedBitmap");
+                Field mCachedBitmapField = Class.forName("androidx.vectordrawable.graphics.drawable.VectorDrawableCompat$VectorDrawableCompatState").getDeclaredField("mCachedBitmap");
                 mCachedBitmapField.setAccessible(true);
                 return (Bitmap) mCachedBitmapField.get(mVectorStateField.get(drawable));
             }

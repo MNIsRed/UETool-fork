@@ -4,18 +4,20 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.SwitchCompat;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SwitchCompat;
+import androidx.core.content.ContextCompat;
+
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.interfaces.DraweeController;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.yc.toollib.crash.CrashToolUtils;
 
 import me.ele.uetool.UETool;
 import me.ele.uetool.sample.ui.recyclerviewsample.RecyclerViewActivity;
@@ -46,6 +48,12 @@ public class MainActivity extends AppCompatActivity {
         updateSpanTextView();
         updateCustomView();
         updateFontView();
+        findViewById(R.id.tv_hello_world).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CrashToolUtils.startCrashListActivity(MainActivity.this);
+            }
+        });
     }
 
     public void onClick(View view) {

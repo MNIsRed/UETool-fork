@@ -5,13 +5,14 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
-import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 
 import me.ele.uetool.base.Element;
 
 import static me.ele.uetool.base.DimenUtil.dip2px;
+
+import androidx.annotation.Nullable;
 
 public class RelativePositionLayout extends CollectViewsLayout {
 

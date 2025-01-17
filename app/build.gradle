@@ -1,6 +1,5 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
 apply plugin: 'me.ele.lancet'
 
 android {
@@ -21,6 +20,7 @@ android {
         targetSdkVersion versions.targetSdk
         versionCode 1
         versionName "1.0"
+        multiDexEnabled = true
     }
     buildTypes {
         release {
@@ -32,14 +32,22 @@ android {
 }
 
 dependencies {
-    implementation "com.android.support:appcompat-v7:27.1.1"
-    implementation "com.android.support:design:27.1.1"
-    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+
     implementation "com.facebook.fresco:fresco:${versions.fresco}"
     implementation "com.facebook.fresco:animated-gif:${versions.fresco}"
-    implementation 'com.android.support:appcompat-v7:28.0.0'
+
+    implementation 'androidx.appcompat:appcompat:1.4.1'
+    implementation "androidx.activity:activity:1.7.2"
+    implementation "androidx.activity:activity-ktx:1.7.2"
+    implementation "androidx.fragment:fragment:1.5.4"
+    implementation 'androidx.fragment:fragment-ktx:1.5.4'
+    implementation "androidx.coordinatorlayout:coordinatorlayout:1.2.0"
+    implementation 'com.google.android.material:material:1.5.0'
+
     implementation 'android.arch.lifecycle:extensions:1.1.1'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.5.4'
     releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
 
@@ -52,6 +60,18 @@ dependencies {
 //  releaseImplementation "me.ele:uetool-no-op:${versions.release}"
 
     compileOnly 'me.ele:lancet-base:1.0.6'
+
+    //磁盘文件查看工具
+    implementation 'com.github.yangchong211.YCAndroidTool:MonitorFileLib:1.2.8'
+//卡顿工具
+    implementation 'com.github.yangchong211.YCAndroidTool:MonitorCatonLib:1.2.8'
+//网络工具
+    implementation 'com.github.yangchong211.YCAndroidTool:MonitorNetLib:1.2.8'
+//崩溃工具
+    implementation 'com.github.yangchong211.YCAndroidTool:MonitorCrashLib:1.2.8'
+//anr工具
+    implementation 'com.github.yangchong211.YCAndroidTool:MonitorAnrLib:1.2.8'
+    implementation("androidx.multidex:multidex:2.0.1")
 
     configurations.all {
         resolutionStrategy.cacheChangingModulesFor 0, 'seconds'

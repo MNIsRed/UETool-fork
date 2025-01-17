@@ -1,9 +1,10 @@
 package me.ele.uetool.base;
 
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * @author: weishenhong <a href="mailto:weishenhong@bytedance.com">contact me.</a>

@@ -1,13 +1,13 @@
 package me.ele.uetool.sample.ui.recyclerviewsample
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import me.ele.uetool.sample.R
 
 class RecyclerViewActivity : AppCompatActivity() {
@@ -32,7 +32,8 @@ class RecyclerViewActivity : AppCompatActivity() {
 }
 
 
-class SimpleAdapter(private val items: List<Item>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class SimpleAdapter(private val items: List<Item>) :
+    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     companion object {
         const val TYPE1: Int = 1
         const val TYPE2: Int = 2
@@ -40,7 +41,8 @@ class SimpleAdapter(private val items: List<Item>) : RecyclerView.Adapter<Recycl
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.layout_simple_textview, parent, false)
+        val view = LayoutInflater.from(parent.context)
+            .inflate(R.layout.layout_simple_textview, parent, false)
         return when (viewType) {
             TYPE2 -> ViewHolder2(view)
             TYPE3 -> ViewHolder3(view)

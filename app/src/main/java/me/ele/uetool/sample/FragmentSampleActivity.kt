@@ -1,7 +1,7 @@
 package me.ele.uetool.sample
 
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import me.ele.uetool.sample.ui.fragmentsample.FragmentSampleFragment
 
 class FragmentSampleActivity : AppCompatActivity() {
@@ -11,8 +11,8 @@ class FragmentSampleActivity : AppCompatActivity() {
         setContentView(R.layout.fragment_sample_activity)
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
-                    .replace(R.id.container, FragmentSampleFragment.newInstance())
-                    .commitNow()
+                .replace(R.id.container, FragmentSampleFragment.newInstance())
+                .commitNow()
         }
     }
 

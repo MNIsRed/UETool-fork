@@ -1,120 +1,116 @@
-package me.ele.uetool;
+package me.ele.uetool
 
-import android.graphics.Color;
-import android.os.Bundle;
-import android.support.annotation.IntDef;
-import android.support.v7.app.AppCompatActivity;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.FrameLayout;
-import android.widget.Toast;
-import me.ele.uetool.base.DimenUtil;
+import android.graphics.Color
+import android.os.Bundle
+import android.view.Gravity
+import android.view.ViewGroup
+import android.widget.FrameLayout
+import android.widget.Toast
+import androidx.annotation.IntDef
+import androidx.appcompat.app.AppCompatActivity
+import me.ele.uetool.base.DimenUtil
 
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
+class TransparentActivity : AppCompatActivity() {
+    private var vContainer: ViewGroup? = null
+    private var type = 0
 
-import static android.view.Gravity.BOTTOM;
-import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
-import static me.ele.uetool.TransparentActivity.Type.*;
-
-public class TransparentActivity extends AppCompatActivity {
-
-    public static final String EXTRA_TYPE = "extra_type";
-
-    private ViewGroup vContainer;
-    private int type;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         if (savedInstanceState != null) {
-            finish();
-            return;
+            finish()
+            return
         }
-        Util.setStatusBarColor(getWindow(), Color.TRANSPARENT);
-        Util.enableFullscreen(getWindow());
-        setContentView(R.layout.uet_activity_transparent);
+        Util.setStatusBarColor(window, Color.TRANSPARENT)
+        Util.enableFullscreen(window)
+        setContentView(R.layout.uet_activity_transparent)
 
-        vContainer = findViewById(R.id.container);
+        vContainer = findViewById(R.id.container)
 
-        final BoardTextView board = new BoardTextView(this);
-        board.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                UETool.getInstance().getTargetActivity().finish();
-                finish();
+        val board = BoardTextView(this)
+        board.setOnClickListener {
+            UETool.getInstance().targetActivity.finish()
+            finish()
+        }
+
+        type = intent.getIntExtra(EXTRA_TYPE, Type.TYPE_UNKNOWN)
+
+        when (type) {
+            Type.TYPE_EDIT_ATTR -> {
+                val editAttrLayout = EditAttrLayout(this)
+                editAttrLayout.setOnDragListener { offsetContent ->
+                    board.updateInfo(
+                        offsetContent
+                    )
+                }
+                vContainer?.addView(editAttrLayout)
             }
-        });
 
-        type = getIntent().getIntExtra(EXTRA_TYPE, TYPE_UNKNOWN);
+            Type.TYPE_RELATIVE_POSITION -> vContainer?.addView(
+                RelativePositionLayout(
+                    this
+                )
+            )
 
-        switch (type) {
-            case TYPE_EDIT_ATTR:
-                EditAttrLayout editAttrLayout = new EditAttrLayout(this);
-                editAttrLayout.setOnDragListener(new EditAttrLayout.OnDragListener() {
-                    @Override
-                    public void showOffset(String offsetContent) {
-                        board.updateInfo(offsetContent);
-                    }
-                });
-                vContainer.addView(editAttrLayout);
-                break;
-            case TYPE_RELATIVE_POSITION:
-                vContainer.addView(new RelativePositionLayout(this));
-                break;
-            case TYPE_SHOW_GRIDDING:
-                vContainer.addView(new GriddingLayout(this));
-                board.updateInfo("LINE_INTERVAL: " + DimenUtil.px2dip(GriddingLayout.LINE_INTERVAL, true));
-                break;
-            default:
-                Toast.makeText(this, getString(R.string.uet_coming_soon), Toast.LENGTH_SHORT).show();
-                finish();
-                break;
-        }
+            Type.TYPE_SHOW_GRIDDING -> {
+                vContainer?.addView(GriddingLayout(this))
+                board.updateInfo(
+                    "LINE_INTERVAL: " + DimenUtil.px2dip(
+                        GriddingLayout.LINE_INTERVAL.toFloat(), true
+                    )
+                )
+            }
 
-        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(WRAP_CONTENT, WRAP_CONTENT);
-        params.gravity = BOTTOM;
-        vContainer.addView(board, params);
-    }
-
-    @Override
-    public void finish() {
-        super.finish();
-        overridePendingTransition(0, 0);
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        UETool.getInstance().release();
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        finish();
-    }
-
-    public void dismissAttrsDialog() {
-        for (int i = 0; i < vContainer.getChildCount(); i++) {
-            View child = vContainer.getChildAt(i);
-            if (child instanceof EditAttrLayout) {
-                ((EditAttrLayout) child).dismissAttrsDialog();
+            else -> {
+                Toast.makeText(this, getString(R.string.uet_coming_soon), Toast.LENGTH_SHORT).show()
+                finish()
             }
         }
+
+        val params = FrameLayout.LayoutParams(
+            ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT
+        )
+        params.gravity = Gravity.BOTTOM
+        vContainer?.addView(board, params)
     }
 
-    @IntDef({
-            TYPE_UNKNOWN,
-            TYPE_EDIT_ATTR,
-            TYPE_SHOW_GRIDDING,
-            TYPE_RELATIVE_POSITION,
-    })
-    @Retention(RetentionPolicy.SOURCE)
-    public @interface Type {
-        int TYPE_UNKNOWN = -1;
-        int TYPE_EDIT_ATTR = 1;
-        int TYPE_SHOW_GRIDDING = 2;
-        int TYPE_RELATIVE_POSITION = 3;
+    override fun finish() {
+        super.finish()
+        overridePendingTransition(0, 0)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        UETool.getInstance().release()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        finish()
+    }
+
+    fun dismissAttrsDialog() {
+        for (i in 0 until vContainer!!.childCount) {
+            val child = vContainer!!.getChildAt(i)
+            if (child is EditAttrLayout) {
+                child.dismissAttrsDialog()
+            }
+        }
+    }
+
+    @IntDef(
+        Type.TYPE_UNKNOWN, Type.TYPE_EDIT_ATTR, Type.TYPE_SHOW_GRIDDING, Type.TYPE_RELATIVE_POSITION
+    )
+    @Retention(AnnotationRetention.SOURCE)
+    annotation class Type {
+        companion object {
+            const val TYPE_UNKNOWN: Int = -1
+            const val TYPE_EDIT_ATTR: Int = 1
+            const val TYPE_SHOW_GRIDDING: Int = 2
+            const val TYPE_RELATIVE_POSITION: Int = 3
+        }
+    }
+
+    companion object {
+        const val EXTRA_TYPE: String = "extra_type"
     }
 }

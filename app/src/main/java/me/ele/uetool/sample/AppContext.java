@@ -6,6 +6,9 @@ import android.os.Bundle;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.squareup.leakcanary.LeakCanary;
+import com.yc.toollib.crash.CrashHandler;
+import com.yc.toollib.crash.CrashListener;
+import com.yc.toollib.crash.CrashToolUtils;
 
 import me.ele.uetool.UETool;
 
@@ -64,6 +67,28 @@ public class AppContext extends Application {
             @Override
             public void onActivityDestroyed(Activity activity) {
 
+            }
+        });
+
+        CrashHandler.getInstance().init(this, new CrashListener() {
+            /**
+             * 重启app
+             */
+            @Override
+            public void againStartApp() {
+                CrashToolUtils.reStartApp1(AppContext.this, 1000);
+                //CrashToolUtils.reStartApp2(App.this,1000, MainActivity.class);
+                //CrashToolUtils.reStartApp3(AppManager.getAppManager().currentActivity());
+            }
+
+            /**
+             * 自定义上传crash，支持开发者上传自己捕获的crash数据
+             * @param ex                        ex
+             */
+            @Override
+            public void recordException(Throwable ex) {
+                //自定义上传crash，支持开发者上传自己捕获的crash数据
+                //StatService.recordException(getApplication(), ex);
             }
         });
     }

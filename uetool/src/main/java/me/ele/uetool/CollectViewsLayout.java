@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.ContextWrapper;
 import android.graphics.*;
 import android.os.Build;
-import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +19,8 @@ import java.util.*;
 import me.ele.uetool.base.ReflectionP.Func;
 
 import static me.ele.uetool.base.DimenUtil.*;
+
+import androidx.annotation.Nullable;
 
 public class CollectViewsLayout extends View {
 

@@ -1,5 +1,6 @@
 apply plugin: 'com.android.library'
-apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: 'org.jetbrains.kotlin.android'
+//apply plugin: 'com.github.dcendents.android-maven'
 
 android {
     compileSdkVersion versions.compileSdk
@@ -11,13 +12,18 @@ android {
     lintOptions {
         abortOnError false
     }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
 }
 
 dependencies {
+    //implementation 'androidx.core:core-ktx:1.15.0'
     compileOnly project(':uetool-base')
 //      api "me.ele:uetool-base:${versions.release}"
     implementation 'com.jakewharton.scalpel:scalpel:1.1.2'
     implementation ('com.github.bmelnychuk:atv:1.2.9') {
         exclude group: 'com.android.support', module: 'appcompat-v7'
     }
+    implementation 'androidx.appcompat:appcompat:1.4.1'
 }

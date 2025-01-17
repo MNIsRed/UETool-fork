@@ -1,5 +1,6 @@
 apply plugin: 'com.android.library'
-apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: 'org.jetbrains.kotlin.android'
+//apply plugin: 'com.github.dcendents.android-maven'
 
 android {
     compileSdkVersion versions.compileSdk
@@ -7,4 +8,11 @@ android {
     defaultConfig {
         minSdkVersion versions.minSdk
     }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+}
+
+dependencies {
+    //implementation 'androidx.core:core-ktx:1.15.0'
 }

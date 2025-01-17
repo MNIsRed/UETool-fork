@@ -6,11 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SwitchCompat;
+
 import android.text.Editable;
 import android.text.Html;
 import android.text.TextUtils;
@@ -46,6 +42,12 @@ import me.ele.uetool.base.item.TitleItem;
 import static me.ele.uetool.base.DimenUtil.dip2px;
 import static me.ele.uetool.base.DimenUtil.getScreenHeight;
 import static me.ele.uetool.base.DimenUtil.getScreenWidth;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.widget.SwitchCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class AttrsDialog extends Dialog {
 
@@ -265,57 +267,57 @@ public class AttrsDialog extends Dialog {
                 @Override
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
                     try {
-                        if (item.getType() == EditTextItem.Type.TYPE_TEXT) {
+                        if (item.type == EditTextItem.Type.TYPE_TEXT) {
                             TextView textView = ((TextView) (item.getElement().getView()));
                             if (!TextUtils.equals(textView.getText().toString(), s.toString())) {
                                 textView.setText(s.toString());
                             }
-                        } else if (item.getType() == EditTextItem.Type.TYPE_TEXT_SIZE) {
+                        } else if (item.type == EditTextItem.Type.TYPE_TEXT_SIZE) {
                             TextView textView = ((TextView) (item.getElement().getView()));
                             float textSize = Float.valueOf(s.toString());
                             if (textView.getTextSize() != textSize) {
                                 textView.setTextSize(textSize);
                             }
-                        } else if (item.getType() == EditTextItem.Type.TYPE_TEXT_COLOR) {
+                        } else if (item.type == EditTextItem.Type.TYPE_TEXT_COLOR) {
                             TextView textView = ((TextView) (item.getElement().getView()));
                             int color = Color.parseColor(vDetail.getText().toString());
                             if (color != textView.getCurrentTextColor()) {
                                 vColor.setBackgroundColor(color);
                                 textView.setTextColor(color);
                             }
-                        } else if (item.getType() == EditTextItem.Type.TYPE_WIDTH) {
+                        } else if (item.type == EditTextItem.Type.TYPE_WIDTH) {
                             View view = item.getElement().getView();
                             int width = dip2px(Integer.valueOf(s.toString()));
                             if (Math.abs(width - view.getWidth()) >= dip2px(1)) {
                                 view.getLayoutParams().width = width;
                                 view.requestLayout();
                             }
-                        } else if (item.getType() == EditTextItem.Type.TYPE_HEIGHT) {
+                        } else if (item.type == EditTextItem.Type.TYPE_HEIGHT) {
                             View view = item.getElement().getView();
                             int height = dip2px(Integer.valueOf(s.toString()));
                             if (Math.abs(height - view.getHeight()) >= dip2px(1)) {
                                 view.getLayoutParams().height = height;
                                 view.requestLayout();
                             }
-                        } else if (item.getType() == EditTextItem.Type.TYPE_PADDING_LEFT) {
+                        } else if (item.type == EditTextItem.Type.TYPE_PADDING_LEFT) {
                             View view = item.getElement().getView();
                             int paddingLeft = dip2px(Integer.valueOf(s.toString()));
                             if (Math.abs(paddingLeft - view.getPaddingLeft()) >= dip2px(1)) {
                                 view.setPadding(paddingLeft, view.getPaddingTop(), view.getPaddingRight(), view.getPaddingBottom());
                             }
-                        } else if (item.getType() == EditTextItem.Type.TYPE_PADDING_RIGHT) {
+                        } else if (item.type == EditTextItem.Type.TYPE_PADDING_RIGHT) {
                             View view = item.getElement().getView();
                             int paddingRight = dip2px(Integer.valueOf(s.toString()));
                             if (Math.abs(paddingRight - view.getPaddingRight()) >= dip2px(1)) {
                                 view.setPadding(view.getPaddingLeft(), view.getPaddingTop(), paddingRight, view.getPaddingBottom());
                             }
-                        } else if (item.getType() == EditTextItem.Type.TYPE_PADDING_TOP) {
+                        } else if (item.type == EditTextItem.Type.TYPE_PADDING_TOP) {
                             View view = item.getElement().getView();
                             int paddingTop = dip2px(Integer.valueOf(s.toString()));
                             if (Math.abs(paddingTop - view.getPaddingTop()) >= dip2px(1)) {
                                 view.setPadding(view.getPaddingLeft(), paddingTop, view.getPaddingRight(), view.getPaddingBottom());
                             }
-                        } else if (item.getType() == EditTextItem.Type.TYPE_PADDING_BOTTOM) {
+                        } else if (item.type == EditTextItem.Type.TYPE_PADDING_BOTTOM) {
                             View view = item.getElement().getView();
                             int paddingBottom = dip2px(Integer.valueOf(s.toString()));
                             if (Math.abs(paddingBottom - view.getPaddingBottom()) >= dip2px(1)) {
@@ -349,10 +351,10 @@ public class AttrsDialog extends Dialog {
             public void bindView(final T editTextItem) {
                 super.bindView(editTextItem);
                 vName.setText(editTextItem.getName());
-                vDetail.setText(editTextItem.getDetail());
+                vDetail.setText(editTextItem.detail);
                 if (vColor != null) {
                     try {
-                        vColor.setBackgroundColor(Color.parseColor(editTextItem.getDetail()));
+                        vColor.setBackgroundColor(Color.parseColor(editTextItem.detail));
                         vColor.setVisibility(View.VISIBLE);
                     } catch (Exception e) {
                         vColor.setVisibility(View.GONE);
@@ -426,7 +428,7 @@ public class AttrsDialog extends Dialog {
                                 }
                                 return;
                             } else if (item.getType() == SwitchItem.Type.TYPE_SHOW_VALID_VIEWS) {
-                                item.setChecked(isChecked);
+                                item.isChecked = isChecked;
                                 if (callback != null) {
                                     callback.showValidViews(getAdapterPosition(), isChecked);
                                 }
@@ -455,7 +457,7 @@ public class AttrsDialog extends Dialog {
                 super.bindView(switchItem);
 
                 vName.setText(switchItem.getName());
-                vSwitch.setChecked(switchItem.isChecked());
+                vSwitch.setChecked(switchItem.isChecked);
             }
         }
 
