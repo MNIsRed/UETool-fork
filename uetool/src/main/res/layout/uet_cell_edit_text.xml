@@ -37,6 +37,8 @@
             android:textColor="#fff"
             android:textSize="@dimen/uet_info_text_size"
             tools:text="112222"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
             tools:textColor="#999" />
 
 
